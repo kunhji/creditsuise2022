@@ -1,0 +1,12 @@
+ server:
+  port : 8082
+ spring:
+  jpa:
+    database-platform: org.hibernate.dialect.HSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:hsqldb:file:db/event
+    username: sa
+    password:
