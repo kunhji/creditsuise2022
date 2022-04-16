@@ -2,6 +2,8 @@ package cs.event.service;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -30,8 +32,13 @@ public class LogEventServiceTest {
 
 	@Test
 	public void testReadAndPublishLogEvents() {
-		String path = ClassLoader.getSystemResource("test-log-event.txt").getPath();
-		logEventService.readAndPublishLogEvents(path);
+
+		final String resourceName = "test-log-event.txt";
+
+		final ClassLoader classLoader = getClass().getClassLoader();
+		final File file = new File(classLoader.getResource(resourceName).getFile());
+
+		logEventService.readAndPublishLogEvents(file.getAbsolutePath());
 
 		ArgumentCaptor<String> eventCaptor = ArgumentCaptor.forClass(String.class);
 		Mockito.verify(eventPublisher, Mockito.times(6)).publishEvent(eventCaptor.capture());
